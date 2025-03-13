@@ -1,0 +1,4 @@
+[submodule "deps/ngyn"]
+	path = deps/ngyn
+	url = https://github.com/waddahex/ngyn.git
+	branch = v0.1
