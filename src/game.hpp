@@ -1,4 +1,5 @@
 #include <ngyn/ngyn.hpp>
+#include "bird.hpp"
 
 class Game : public ngyn::Engine
 {
@@ -13,4 +14,7 @@ class Game : public ngyn::Engine
   virtual void onSetup();
   virtual void onUpdate();
   virtual void onRender();
+
+  private:
+  Bird bird;
 };
