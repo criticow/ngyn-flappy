@@ -2,7 +2,7 @@
 
 #include <ngyn/ngyn.hpp>
 #include "dog.hpp"
-#include "pipe.hpp"
+#include "obstacle_manager.hpp"
 
 class Game : public ngyn::Engine
 {
@@ -15,4 +15,5 @@ class Game : public ngyn::Engine
 
   private:
   Dog dog;
+  ObstacleManager obstacleManager;
 };

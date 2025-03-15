@@ -32,29 +32,7 @@ void Game::onSetup()
   dog = Dog(glm::vec2(50.0f, window.resolution().y * 0.5f - 16.0f));
   dog.instantiate();
 
-  float pipeWidth = 32.0f;
-
-  // Get a random height for the open space between pipes
-  float openingHeight = random::getFloat(pipeWidth * 2, pipeWidth * 4);
-
-  float minPipeHeight = pipeWidth * 3;
-  float maxPipeHeight = window.resolution().y - minPipeHeight - openingHeight;
-
-  // Get a random height for the top pipe based on the opening
-  float topHeight = random::getFloat(minPipeHeight, maxPipeHeight);
-  float bottomHeight = window.resolution().y - topHeight - openingHeight;
-
-  LOGGER_DEBUG("{}", topHeight + bottomHeight + openingHeight);
-
-  Pipe{{
-    .position = glm::vec2(500.0f, 0.0f),
-    .size = glm::vec2(pipeWidth, topHeight)
-  }};
-
-  Pipe{{
-    .position = glm::vec2(500.0f, topHeight + openingHeight),
-    .size = glm::vec2(pipeWidth, bottomHeight)
-  }};
+  obstacleManager = ObstacleManager(window.resolution());
 }
 
 void Game::onUpdate()
@@ -63,6 +41,8 @@ void Game::onUpdate()
   {
     dog.update();
   }
+
+  obstacleManager.update();
 }
 
 void Game::onRender()
