@@ -1,20 +1,18 @@
+#pragma once
+
 #include <ngyn/ngyn.hpp>
-#include "bird.hpp"
+#include "dog.hpp"
+#include "pipe.hpp"
 
 class Game : public ngyn::Engine
 {
   public:
-  Game() : Engine({
-    .window = ngyn::Window{{
-      .resizable = true,
-      .monitor = 1
-    }}
-  }){};
+  Game();
 
   virtual void onSetup();
   virtual void onUpdate();
   virtual void onRender();
 
   private:
-  Bird bird;
+  Dog dog;
 };

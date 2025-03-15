@@ -1,11 +1,14 @@
+#pragma once
+
 #include <ngyn/ngyn.hpp>
 
 using namespace ngyn;
 
-class Bird : public AnimatedSprite
+class Dog : public AnimatedSprite
 {
   public:
-  Bird();
+  Dog(void) = default;
+  Dog(glm::vec2 position);
 
   void update();
 
