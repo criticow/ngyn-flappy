@@ -12,7 +12,7 @@ ObstacleManager::ObstacleManager(glm::vec2 resolution)
 
 void ObstacleManager::update()
 {
-  float speed = 75.0f;
+  float speed = 75.0f + ngTime.getTime() * ngTime.deltaTime();
 
   for(size_t i = 0; i < _obstacles.size(); i++)
   {
@@ -27,8 +27,6 @@ void ObstacleManager::update()
       auto targetPosition = _obstacles[previousIndex].position();
 
       obstacle.setPosition(glm::vec2(targetPosition.x + _offset, 0.0f));
-
-      LOGGER_DEBUG("Pipe left the screen, repositioning");
     }
   }
 }

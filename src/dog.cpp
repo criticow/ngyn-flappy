@@ -22,7 +22,7 @@ Dog::Dog(glm::vec2 position) : AnimatedSprite{Sprite::CreateInfo{
     .repeat = true
   });
 
-  speed = 150.0f;
+  speed = 50.0f;
   targetY = 0.0f;
   falling = true;
   isDead = false;
@@ -30,17 +30,20 @@ Dog::Dog(glm::vec2 position) : AnimatedSprite{Sprite::CreateInfo{
 
 void Dog::update()
 {
-  if(falling && ngInput.pressed("KEY_SPACE"))
-  {
-    targetY = transform.position().y - speed / 2.3;
-
-    falling = false;
-  }
-
   glm::vec2 velocity(0.0f);
 
   auto position = transform.position();
   auto size = transform.size();
+
+  float yDecrement = transform.position().y - speed / 2.0f;
+  float flapTreshold = yDecrement * 0.5f;
+
+  if((falling || position.y >= flapTreshold) && ngInput.pressed("KEY_SPACE"))
+  {
+    targetY = yDecrement;
+
+    falling = false;
+  }
 
   if(!falling && position.y >= targetY)
   {
@@ -69,7 +72,7 @@ void Dog::update()
 
   if(falling)
   {
-    velocity.y = speed * ngTime.deltaTime();
+    velocity.y = speed * 1.5f * ngTime.deltaTime();
 
     // Reached the bottom of the screen
     if(position.y + velocity.y + size.y >= 720.0f)

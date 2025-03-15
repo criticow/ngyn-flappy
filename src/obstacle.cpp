@@ -24,8 +24,6 @@ Obstacle::Obstacle(glm::vec2 position, glm::vec2 resolution)
     .camera = camera
   }};
 
-  // float yPos = createInfo.position.y > 0.0f ? createInfo.position.y - createInfo.size.x : createInfo.size.y - createInfo.size.x;
-
   _topHead = AnimatedSprite{Sprite::CreateInfo{
     .frame = {
       .texture = texture,
@@ -53,8 +51,6 @@ Obstacle::Obstacle(glm::vec2 position, glm::vec2 resolution)
     .camera = camera
   }};
 
-  // float yPos = createInfo.position.y > 0.0f ? createInfo.position.y - createInfo.size.x : createInfo.size.y - createInfo.size.x;
-
   _bottomHead = AnimatedSprite{Sprite::CreateInfo{
     .frame = {
       .texture = texture,
@@ -81,9 +77,9 @@ Obstacle::Obstacle(glm::vec2 position, glm::vec2 resolution)
 void Obstacle::updateSizeAndPosition()
 {
   // Get a random height for the open space between pipes
-  float openingHeight = random::getFloat(_pipeWidth * 2, _pipeWidth * 4);
+  float openingHeight = random::getFloat(_pipeWidth * 2, _pipeWidth * 3);
 
-  float minPipeHeight = _pipeWidth * 3;
+  float minPipeHeight = _pipeWidth * 2;
   float maxPipeHeight = _resolution.y - minPipeHeight - openingHeight;
 
   // Get a random height for the top pipe based on the opening
