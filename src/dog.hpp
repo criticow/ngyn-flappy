@@ -12,6 +12,7 @@ class Dog : public AnimatedSprite
 
   void update();
   void instantiate();
+  void toggleDebugging();
 
   Sprite collider;
 
@@ -21,4 +22,5 @@ class Dog : public AnimatedSprite
   float speed;
   float targetY;
   bool falling;
+  bool isDebugging;
 };

@@ -53,6 +53,11 @@ void Game::onSetup()
 
 void Game::onUpdate()
 {
+  if(ngInput.pressed("KEY_F8"))
+  {
+    dog.toggleDebugging();
+  }
+
   if(ui.scene() == UI::Scene::Pause && ngInput.pressed("KEY_SPACE"))
   {
     ui.setScene(UI::Scene::Play);

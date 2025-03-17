@@ -30,10 +30,12 @@ Dog::Dog(glm::vec2 position) : AnimatedSprite{Sprite::CreateInfo{
   targetY = 0.0f;
   falling = true;
   isDead = false;
+  isDebugging = false;
 
   collider = Sprite(Sprite::CreateInfo{
     .frame = {
-      .color = Color(255, 0, 0, 125)
+      .color = Color(255, 0, 0, 125),
+      .visibility = Frame::Visibility::Hidden
     },
     .transform = {
       .position = transform.position() + glm::vec2(1.0f, 15.0f),
@@ -43,6 +45,12 @@ Dog::Dog(glm::vec2 position) : AnimatedSprite{Sprite::CreateInfo{
     .renderer = renderer,
     .camera = camera,
   });
+}
+
+void Dog::toggleDebugging()
+{
+  isDebugging = !isDebugging;
+  collider.frame.setVisibility(static_cast<Frame::Visibility>(isDebugging));
 }
 
 void Dog::update()
