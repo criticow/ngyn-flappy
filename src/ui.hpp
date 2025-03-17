@@ -22,6 +22,8 @@ class UI
   void setScene(Scene scene);
   const Scene &scene();
 
+  void reset();
+
   private:
   int _score;
   Text _scoreText;

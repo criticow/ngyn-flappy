@@ -13,14 +13,14 @@ class Dog : public AnimatedSprite
   void update();
   void instantiate();
   void toggleDebugging();
+  void reset();
 
   Sprite collider;
-
-  bool isDead;
 
   private:
   float speed;
   float targetY;
   bool falling;
   bool isDebugging;
+  glm::vec2 startPosition;
 };

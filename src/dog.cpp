@@ -29,8 +29,8 @@ Dog::Dog(glm::vec2 position) : AnimatedSprite{Sprite::CreateInfo{
   speed = 50.0f;
   targetY = 0.0f;
   falling = true;
-  isDead = false;
   isDebugging = false;
+  startPosition = position;
 
   collider = Sprite(Sprite::CreateInfo{
     .frame = {
@@ -47,10 +47,19 @@ Dog::Dog(glm::vec2 position) : AnimatedSprite{Sprite::CreateInfo{
   });
 }
 
+void Dog::reset()
+{
+  transform.setPosition(startPosition);
+  collider.transform.setPosition(transform.position() + glm::vec2(1.0f, 15.0f));
+
+  update();
+}
+
 void Dog::toggleDebugging()
 {
   isDebugging = !isDebugging;
   collider.frame.setVisibility(static_cast<Frame::Visibility>(isDebugging));
+  collider.update();
 }
 
 void Dog::update()
@@ -98,12 +107,6 @@ void Dog::update()
   if(falling)
   {
     velocity.y = speed * 1.5f * ngTime.deltaTime();
-
-    // Reached the bottom of the screen
-    if(position.y + velocity.y + size.y >= 720.0f)
-    {
-      isDead = true;
-    }
   }
 
   moveBy(velocity);

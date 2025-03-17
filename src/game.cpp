@@ -43,7 +43,11 @@ void Game::onSetup()
 
   renderer.lock().get()->setup();
 
-  dog = Dog(glm::vec2(50.0f, window.resolution().y * 0.5f - 16.0f));
+  dog = Dog(glm::vec2(
+    window.resolution().x * 0.5f - 16.0f,
+    window.resolution().y * 0.5f - 16.0f
+  ));
+
   dog.instantiate();
 
   ui = UI(window.resolution());
@@ -56,6 +60,14 @@ void Game::onUpdate()
   if(ngInput.pressed("KEY_F8"))
   {
     dog.toggleDebugging();
+    obstacleManager.toggleDebugging();
+  }
+
+  if(ngInput.pressed("KEY_F1"))
+  {
+    dog.reset();
+    obstacleManager.reset();
+    ui.reset();
   }
 
   if(ui.scene() == UI::Scene::Pause && ngInput.pressed("KEY_SPACE"))

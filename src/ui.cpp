@@ -150,3 +150,11 @@ void UI::incrementScore()
   _scoreText.setValue("Score: " + std::to_string(_score));
   _scoreText.update();
 }
+
+void UI::reset()
+{
+  _score = 0;
+  _scoreText.setValue("Score: " + std::to_string(_score));
+  _scoreText.update();
+  setScene(UI::Scene::Pause);
+}

@@ -11,6 +11,7 @@ class Obstacle
 
   void moveBy(const glm::vec2 &velocity);
   void setPosition(const glm::vec2 &position);
+  void toggleDebugging();
 
   const glm::vec2 &position();
   const float &pipeWidth();
@@ -21,9 +22,13 @@ class Obstacle
   float _pipeWidth;
   AnimatedSprite _topHead;
   AnimatedSprite _topBody;
+  Sprite _topCollider;
 
   AnimatedSprite _bottomHead;
   AnimatedSprite _bottomBody;
+  Sprite _bottomCollider;
+
+  bool _isDebugging;
 
   void updateSizeAndPosition();
 
