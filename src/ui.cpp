@@ -71,6 +71,41 @@ UI::UI(glm::vec2 resolution)
   });
 
   _gameOverBackground.instantiate();
+
+  glm::vec2 pauseTextSize = font.lock().get()->getTextSize("Press space");
+  glm::vec2 pauseTextPosition = resolution * 0.5f - pauseTextSize * 0.5f;
+
+  _pauseText = Text(Text::CreateInfo{
+    .font = font,
+    .camera = camera,
+    .renderer = renderer,
+    .position = pauseTextPosition,
+    .value = "Press space",
+    .color = Color(255),
+    .visibility = Frame::Visibility::Visible,
+    .layer = 5,
+  });
+  _pauseText.instantiate();
+
+  _pauseBackground = Sprite(Sprite::CreateInfo{
+    .frame = {
+      .color = Color(0, 0, 0, 150),
+      .visibility = Frame::Visibility::Visible,
+    },
+    .transform = {
+      .position = pauseTextPosition - padding,
+      .size = pauseTextSize + padding * 2.0f,
+      .layer = 4
+    },
+    .renderer = renderer,
+    .camera = camera,
+  });
+  _pauseBackground.instantiate();
+}
+
+const UI::Scene &UI::scene()
+{
+  return _scene;
 }
 
 void UI::setScene(Scene scene)
@@ -79,23 +114,39 @@ void UI::setScene(Scene scene)
 
   _scene = scene;
 
+  if(scene == Scene::Play)
+  {
+    _gameOverBackground.frame.setVisibility(Frame::Visibility::Hidden);
+    _gameOverText.setVisibility(Frame::Visibility::Hidden);
+    _pauseBackground.frame.setVisibility(Frame::Visibility::Hidden);
+    _pauseText.setVisibility(Frame::Visibility::Hidden);
+  }
+
   if(scene == Scene::GameOver)
   {
     _gameOverBackground.frame.setVisibility(Frame::Visibility::Visible);
     _gameOverText.setVisibility(Frame::Visibility::Visible);
-
-    _gameOverBackground.update();
-    _gameOverText.update();
+    _pauseBackground.frame.setVisibility(Frame::Visibility::Hidden);
+    _pauseText.setVisibility(Frame::Visibility::Hidden);
   }
+
+  if(scene == Scene::Pause)
+  {
+    _gameOverBackground.frame.setVisibility(Frame::Visibility::Hidden);
+    _gameOverText.setVisibility(Frame::Visibility::Hidden);
+    _pauseBackground.frame.setVisibility(Frame::Visibility::Visible);
+    _pauseText.setVisibility(Frame::Visibility::Visible);
+  }
+
+  _gameOverBackground.update();
+  _gameOverText.update();
+  _pauseBackground.update();
+  _pauseText.update();
 }
 
 void UI::incrementScore()
 {
   _score++;
   _scoreText.setValue("Score: " + std::to_string(_score));
-}
-
-void UI::update()
-{
   _scoreText.update();
 }

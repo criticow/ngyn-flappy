@@ -53,6 +53,21 @@ void Game::onSetup()
 
 void Game::onUpdate()
 {
+  if(ui.scene() == UI::Scene::Pause && ngInput.pressed("KEY_SPACE"))
+  {
+    ui.setScene(UI::Scene::Play);
+  }
+
+  if(ui.scene() == UI::Scene::Play && ngInput.pressed("KEY_ESCAPE"))
+  {
+    ui.setScene(UI::Scene::Pause);
+  }
+
+  if(ui.scene() == UI::Scene::Pause)
+  {
+    return;
+  }
+
   if(obstacleManager.collided(dog.collider.transform))
   {
     ui.setScene(UI::Scene::GameOver);
@@ -65,7 +80,6 @@ void Game::onUpdate()
   }
 
   dog.update();
-  ui.update();
   obstacleManager.update();
 }
 

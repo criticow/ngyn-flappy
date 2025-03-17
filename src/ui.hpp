@@ -19,8 +19,8 @@ class UI
   UI(glm::vec2 resolution);
 
   void incrementScore();
-  void update();
   void setScene(Scene scene);
+  const Scene &scene();
 
   private:
   int _score;
@@ -30,4 +30,7 @@ class UI
 
   Text _gameOverText;
   Sprite _gameOverBackground;
+
+  Text _pauseText;
+  Sprite _pauseBackground;
 };
