@@ -3,10 +3,16 @@
 ObstacleManager::ObstacleManager(glm::vec2 resolution)
 {
   _offset = 175.0f;
+  _first = 0;
+
+  float start = _offset * 2.0f;
 
   for(size_t i = 0; i < 5; i++)
   {
-    _obstacles.push_back(Obstacle(glm::vec2((i + 1) * _offset, 0.0f), resolution));
+    _obstacles.push_back(Obstacle(glm::vec2(
+      (i + 1) * _offset + start, 0.0f),
+      resolution
+    ));
   }
 }
 
@@ -29,4 +35,44 @@ void ObstacleManager::update()
       obstacle.setPosition(glm::vec2(targetPosition.x + _offset, 0.0f));
     }
   }
+}
+
+bool ObstacleManager::scored(Transform &transform)
+{
+  auto obstacle = _obstacles[_first];
+
+  // Dog has passed the pipe without colliding
+  if(transform.position().x > obstacle.position().x + obstacle.pipeWidth())
+  {
+    _first == _obstacles.size() - 1 ? _first = 0 : _first++;
+
+    return true;
+  }
+
+  return false;
+}
+
+bool ObstacleManager::collided(Transform &transform)
+{
+  auto obstacle = _obstacles[_first];
+  
+  bool topBody = checkCollision(transform, obstacle._topBody.transform);
+  bool bottomBody = checkCollision(transform, obstacle._bottomBody.transform);
+
+  if(topBody || bottomBody)
+  {
+    return true;
+  }
+
+  return false;
+}
+
+bool ObstacleManager::checkCollision(Transform &transform, Transform &transform2)
+{
+  bool leftEdge = transform.position().x < transform2.position().x + transform2.size().x;
+  bool rightEdge = transform.position().x + transform.size().x > transform2.position().x;
+  bool bottomEdge = transform.position().y < transform2.position().y + transform2.size().y;
+  bool topEdge = transform.position().y + transform.size().y > transform2.position().y;
+
+  return leftEdge && rightEdge && bottomEdge && topEdge;
 }

@@ -4,16 +4,20 @@ Dog::Dog(glm::vec2 position) : AnimatedSprite{Sprite::CreateInfo{
     .frame = {
       .texture = ResourcesManager::getResource<Texture>("spritesheet"),
       .index = 1,
-      .size = glm::vec2(32.0f)
+      .size = glm::vec2(32.0f),
+      .color = Color(255, 0, 0)
     },
     .transform = {
       .position = position,
-      .size = glm::vec2(50.0f)
+      .size = glm::vec2(32.0f),
     }
   }}
 {
-  setRenderer(ResourcesManager::getResource<QuadRenderer>("main_renderer"));
-  setCamera(ResourcesManager::getResource<Camera>("main_camera"));
+  auto renderer = ResourcesManager::getResource<QuadRenderer>("main_renderer");
+  auto camera = ResourcesManager::getResource<Camera>("main_camera");
+
+  setRenderer(renderer);
+  setCamera(camera);
 
   setAnimation(Animation{
     .name = "flap",
@@ -26,6 +30,19 @@ Dog::Dog(glm::vec2 position) : AnimatedSprite{Sprite::CreateInfo{
   targetY = 0.0f;
   falling = true;
   isDead = false;
+
+  collider = Sprite(Sprite::CreateInfo{
+    .frame = {
+      .color = Color(255, 0, 0, 125)
+    },
+    .transform = {
+      .position = transform.position() + glm::vec2(1.0f, 15.0f),
+      .size = glm::vec2(30.0f, 17.0f),
+      .layer = 3
+    },
+    .renderer = renderer,
+    .camera = camera,
+  });
 }
 
 void Dog::update()
@@ -83,5 +100,15 @@ void Dog::update()
 
   moveBy(velocity);
 
+  collider.transform.setPosition(transform.position() + glm::vec2(1.0f, 15.0f));
+  collider.update();
+
   AnimatedSprite::update();
+}
+
+void Dog::instantiate()
+{
+  collider.instantiate();
+
+  AnimatedSprite::instantiate();
 }

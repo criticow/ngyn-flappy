@@ -11,6 +11,9 @@ class Dog : public AnimatedSprite
   Dog(glm::vec2 position);
 
   void update();
+  void instantiate();
+
+  Sprite collider;
 
   bool isDead;
 

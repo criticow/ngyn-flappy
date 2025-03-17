@@ -26,4 +26,6 @@ class Obstacle
   AnimatedSprite _bottomBody;
 
   void updateSizeAndPosition();
+
+  friend class ObstacleManager;
 };

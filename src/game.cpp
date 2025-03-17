@@ -12,9 +12,9 @@ Game::Game() : Engine({
 
 void Game::onSetup()
 {
-  auto quadRenderer = ResourcesManager::addResource<QuadRenderer>("main_renderer", QuadRenderer{});
+  auto renderer = ResourcesManager::addResource<QuadRenderer>("main_renderer", QuadRenderer{});
 
-  ResourcesManager::addResource<Camera>(
+  auto camera = ResourcesManager::addResource<Camera>(
     "main_camera",
     Camera({
       .position = glm::vec2(0.0f),
@@ -22,26 +22,50 @@ void Game::onSetup()
     })
   );
 
+  auto font = ResourcesManager::addResource<Font>("dogica", Font{Font::CreateInfo{
+    .path = "data/fonts/dogica.ttf",
+    .name = "dogica",
+    .size = 32,
+    .pixelated = true,
+  }});
+
+  ResourcesManager::addResource<Font>("dogica_64", Font{Font::CreateInfo{
+    .path = "data/fonts/dogica.ttf",
+    .name = "dogica_64",
+    .size = 64,
+    .pixelated = true,
+  }});
+
   ResourcesManager::addResource<Texture>("spritesheet", Texture{{
     .image = "data/textures/spritesheet.png",
     .filtering = Texture::Filtering::Nearest
   }});
 
-  quadRenderer.lock().get()->setup();
+  renderer.lock().get()->setup();
 
   dog = Dog(glm::vec2(50.0f, window.resolution().y * 0.5f - 16.0f));
   dog.instantiate();
+
+  ui = UI(window.resolution());
 
   obstacleManager = ObstacleManager(window.resolution());
 }
 
 void Game::onUpdate()
 {
-  if(!dog.isDead)
+  if(obstacleManager.collided(dog.collider.transform))
   {
-    dog.update();
+    ui.setScene(UI::Scene::GameOver);
+    return;
   }
 
+  if(obstacleManager.scored(dog.collider.transform))
+  {
+    ui.incrementScore();
+  }
+
+  dog.update();
+  ui.update();
   obstacleManager.update();
 }
 

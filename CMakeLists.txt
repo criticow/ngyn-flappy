@@ -13,6 +13,7 @@ add_executable(${PROJECT_NAME}
   src/dog.cpp
   src/obstacle.cpp
   src/obstacle_manager.cpp
+  src/ui.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ngyn)
