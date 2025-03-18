@@ -42,7 +42,7 @@ Obstacle::Obstacle(glm::vec2 position, glm::vec2 resolution)
   _topCollider = Sprite{Sprite::CreateInfo{
     .frame = {
       .size = glm::vec2(32.0f),
-      .color = Color(0, 0, 255, 125),
+      .color = Color(255, 0, 255, 125),
       .visibility = Frame::Visibility::Hidden
     },
     .transform = {
@@ -85,7 +85,7 @@ Obstacle::Obstacle(glm::vec2 position, glm::vec2 resolution)
   _bottomCollider = Sprite{Sprite::CreateInfo{
     .frame = {
       .size = glm::vec2(32.0f),
-      .color = Color(0, 0, 255, 125),
+      .color = Color(255, 0, 255, 125),
       .visibility = Frame::Visibility::Hidden,
     },
     .transform = {

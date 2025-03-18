@@ -12,6 +12,8 @@ Game::Game() : Engine({
 
 void Game::onSetup()
 {
+  window.setColor(Color("#48a1de"));
+  
   auto renderer = ResourcesManager::addResource<QuadRenderer>("main_renderer", QuadRenderer{});
 
   auto camera = ResourcesManager::addResource<Camera>(
