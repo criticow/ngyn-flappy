@@ -8,6 +8,8 @@ UI::UI(glm::vec2 resolution)
   std::weak_ptr<Camera> camera = ResourcesManager::getResource<Camera>("main_camera");
   std::weak_ptr<Font> font = ResourcesManager::getResource<Font>("dogica");
 
+  glm::vec2 scoreTextSize = font.lock().get()->getTextSize("Score: 0");
+
   _scoreText = Text(Text::CreateInfo{
     .font = font,
     .camera = camera,
@@ -20,13 +22,12 @@ UI::UI(glm::vec2 resolution)
 
   _scoreText.instantiate();
 
-
   _scoreBackground = Sprite(Sprite::CreateInfo{
     .frame = {
       .color = Color(0, 0, 0, 150)
     },
     .transform = {
-      .size = glm::vec2(200.0f, 40.0f),
+      .size = scoreTextSize,
       .layer = 4
     },
     .renderer = renderer,
@@ -149,9 +150,16 @@ void UI::setScene(Scene scene)
 
 void UI::incrementScore()
 {
+  std::string newValue = "Score: " + std::to_string(_score);
   _score++;
-  _scoreText.setValue("Score: " + std::to_string(_score));
+  _scoreText.setValue(newValue);
   _scoreText.update();
+
+  auto font = _scoreText.font();
+  glm::vec2 scoreTextSize = font.lock().get()->getTextSize(newValue);
+
+  _scoreBackground.transform.setSize(scoreTextSize);
+  _scoreBackground.update();
 }
 
 void UI::reset()
