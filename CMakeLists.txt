@@ -31,3 +31,8 @@ add_custom_target(
 )
 
 add_dependencies(${PROJECT_NAME} copy_data)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+  target_compile_definitions(${PROJECT_NAME} PRIVATE -NDEBUG)
+  set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS")
+endif()
