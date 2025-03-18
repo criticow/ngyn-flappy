@@ -17,3 +17,7 @@ the obstacle or falls bellow the window height it is game over.
 - Reset (restarts the game) - F1
 - Debug (show colliders) - F8
 - Pause (stops updating) - ESC
+
+## Dependencies
+
+Make sure you have Microsoft Visual C++ installed.
