@@ -2,6 +2,7 @@
 
 UI::UI(glm::vec2 resolution)
 {
+  _padding = 5.0f;
   _scene = Scene::Pause;
 
   std::weak_ptr<QuadRenderer> renderer = ResourcesManager::getResource<QuadRenderer>("main_renderer");
@@ -10,13 +11,11 @@ UI::UI(glm::vec2 resolution)
 
   glm::vec2 scoreTextSize = font.lock().get()->getTextSize("Score: 0");
 
-  float padding = 5.0f;
-
   _scoreText = Text(Text::CreateInfo{
     .font = font,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(padding),
+    .position = glm::vec2(_padding),
     .value = "Score: 0",
     .color = Color(255),
     .layer = 5
@@ -29,7 +28,7 @@ UI::UI(glm::vec2 resolution)
       .color = Color(0, 0, 0, 150)
     },
     .transform = {
-      .size = scoreTextSize + padding * 2,
+      .size = scoreTextSize + _padding * 2,
       .layer = 4
     },
     .renderer = renderer,
@@ -64,8 +63,8 @@ UI::UI(glm::vec2 resolution)
       .visibility = Frame::Visibility::Hidden,
     },
     .transform = {
-      .position = textPosition - padding,
-      .size = textSize + padding * 2.0f,
+      .position = textPosition - _padding,
+      .size = textSize + _padding * 2.0f,
       .layer = 4
     },
     .renderer = renderer,
@@ -95,8 +94,8 @@ UI::UI(glm::vec2 resolution)
       .visibility = Frame::Visibility::Visible,
     },
     .transform = {
-      .position = pauseTextPosition - padding,
-      .size = pauseTextSize + padding * 2.0f,
+      .position = pauseTextPosition - _padding,
+      .size = pauseTextSize + _padding * 2.0f,
       .layer = 4
     },
     .renderer = renderer,
@@ -159,9 +158,7 @@ void UI::incrementScore()
   auto font = _scoreText.font();
   glm::vec2 scoreTextSize = font.lock().get()->getTextSize(newValue);
 
-  float padding = 5.0f;
-
-  _scoreBackground.transform.setSize(scoreTextSize + padding * 2);
+  _scoreBackground.transform.setSize(scoreTextSize + _padding * 2);
   _scoreBackground.update();
 }
 

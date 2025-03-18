@@ -25,6 +25,7 @@ class UI
   void reset();
 
   private:
+  float _padding;
   int _score;
   Text _scoreText;
   Sprite _scoreBackground;
