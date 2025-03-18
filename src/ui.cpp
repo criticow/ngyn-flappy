@@ -10,11 +10,13 @@ UI::UI(glm::vec2 resolution)
 
   glm::vec2 scoreTextSize = font.lock().get()->getTextSize("Score: 0");
 
+  float padding = 5.0f;
+
   _scoreText = Text(Text::CreateInfo{
     .font = font,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(0.0f),
+    .position = glm::vec2(padding),
     .value = "Score: 0",
     .color = Color(255),
     .layer = 5
@@ -27,7 +29,7 @@ UI::UI(glm::vec2 resolution)
       .color = Color(0, 0, 0, 150)
     },
     .transform = {
-      .size = scoreTextSize,
+      .size = scoreTextSize + padding * 2,
       .layer = 4
     },
     .renderer = renderer,
@@ -55,8 +57,6 @@ UI::UI(glm::vec2 resolution)
   });
 
   _gameOverText.instantiate();
-
-  float padding = 5.0f;
 
   _gameOverBackground = Sprite(Sprite::CreateInfo{
     .frame = {
@@ -150,15 +150,18 @@ void UI::setScene(Scene scene)
 
 void UI::incrementScore()
 {
-  std::string newValue = "Score: " + std::to_string(_score);
   _score++;
+
+  std::string newValue = "Score: " + std::to_string(_score);
   _scoreText.setValue(newValue);
   _scoreText.update();
 
   auto font = _scoreText.font();
   glm::vec2 scoreTextSize = font.lock().get()->getTextSize(newValue);
 
-  _scoreBackground.transform.setSize(scoreTextSize);
+  float padding = 5.0f;
+
+  _scoreBackground.transform.setSize(scoreTextSize + padding * 2);
   _scoreBackground.update();
 }
 
