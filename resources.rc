@@ -1,0 +1,3 @@
+#include "winres.h"
+
+IDI_ICON64 ICON "data/icons/exe.ico"

@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(NGYN_BUILD_TESTS OFF)
 set(NGYN_BUILD_EXAMPLES OFF)
 
-project(flappy)
+project(FlappyDog)
 
 add_executable(${PROJECT_NAME}
   src/main.cpp
@@ -14,6 +14,8 @@ add_executable(${PROJECT_NAME}
   src/obstacle.cpp
   src/obstacle_manager.cpp
   src/ui.cpp
+
+  resources.rc
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ngyn)

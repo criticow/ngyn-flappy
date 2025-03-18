@@ -4,6 +4,7 @@ using namespace ngyn;
 
 Game::Game() : Engine({
   .window = ngyn::Window{{
+    .title = "FlappyDog",
     .resolution = glm::vec2(640.0f, 360.0f),
     .resizable = true,
     .monitor = 1
@@ -13,6 +14,7 @@ Game::Game() : Engine({
 void Game::onSetup()
 {
   window.setColor(Color("#48a1de"));
+  window.setIcon("data/icons/window.png");
   
   auto renderer = ResourcesManager::addResource<QuadRenderer>("main_renderer", QuadRenderer{});
 
