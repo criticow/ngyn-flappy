@@ -20,6 +20,7 @@ UI::UI(glm::vec2 resolution)
 
   _scoreText.instantiate();
 
+
   _scoreBackground = Sprite(Sprite::CreateInfo{
     .frame = {
       .color = Color(0, 0, 0, 150)
@@ -101,6 +102,8 @@ UI::UI(glm::vec2 resolution)
     .camera = camera,
   });
   _pauseBackground.instantiate();
+
+  fixedText();
 }
 
 const UI::Scene &UI::scene()
@@ -157,4 +160,138 @@ void UI::reset()
   _scoreText.setValue("Score: " + std::to_string(_score));
   _scoreText.update();
   setScene(UI::Scene::Pause);
+}
+
+void UI::fixedText()
+{
+  // Fixed Text
+  std::weak_ptr<QuadRenderer> renderer = ResourcesManager::getResource<QuadRenderer>("main_renderer");
+  std::weak_ptr<Camera> camera = ResourcesManager::getResource<Camera>("main_camera");
+  std::weak_ptr<Font> font = ResourcesManager::getResource<Font>("dogica");
+  std::weak_ptr<Font> font_8 = ResourcesManager::getResource<Font>("dogica_8");
+
+  float startX = font.lock().get()->maxHeight() + 15.0f;
+  float yPos = startX;
+  glm::vec2 size = font_8.lock().get()->getTextSize("COMMAND ");
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(0.0f, yPos),
+    .value = "Hotkeys:",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  yPos += size.y + 5.0f;
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(0.0f, yPos),
+    .value = "COMMAND",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(size.x, yPos),
+    .value = "KEY",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  yPos += size.y + 1.0f;
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(0.0f, yPos),
+    .value = "Flap",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(size.x, yPos),
+    .value = "Spacebar",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  yPos += size.y + 1.0f;
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(0.0f, yPos),
+    .value = "Reset",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(size.x, yPos),
+    .value = "F1",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  yPos += size.y + 1.0f;
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(0.0f, yPos),
+    .value = "Debug",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(size.x, yPos),
+    .value = "F8",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  yPos += size.y + 1.0f;
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(0.0f, yPos),
+    .value = "Pause",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+
+  Text(Text::CreateInfo{
+    .font = font_8,
+    .camera = camera,
+    .renderer = renderer,
+    .position = glm::vec2(size.x, yPos),
+    .value = "ESC",
+    .color = Color(255),
+    .layer = 5
+  }).instantiate();
+  // Fixed Text
 }

@@ -22,6 +22,13 @@ void Game::onSetup()
     })
   );
 
+  ResourcesManager::addResource<Font>("dogica_8", Font{Font::CreateInfo{
+    .path = "data/fonts/dogica.ttf",
+    .name = "dogica_8",
+    .size = 8,
+    .pixelated = true,
+  }});
+
   auto font = ResourcesManager::addResource<Font>("dogica", Font{Font::CreateInfo{
     .path = "data/fonts/dogica.ttf",
     .name = "dogica",

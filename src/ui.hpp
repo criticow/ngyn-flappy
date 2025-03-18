@@ -35,4 +35,6 @@ class UI
 
   Text _pauseText;
   Sprite _pauseBackground;
+
+  void fixedText();
 };

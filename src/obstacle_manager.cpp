@@ -49,7 +49,13 @@ bool ObstacleManager::collided(Transform &transform)
   bool topBody = checkCollision(transform, obstacle._topBody.transform);
   bool bottomBody = checkCollision(transform, obstacle._bottomBody.transform);
 
-  if(topBody || bottomBody)
+  // if(topBody || bottomBody)
+  // {
+  //   return true;
+  // }
+
+  // Dog fell of the window boundaries
+  if(transform.position().y > _resolution.y)
   {
     return true;
   }
