@@ -175,30 +175,35 @@ void UI::fixedText()
   // Fixed Text
   std::weak_ptr<QuadRenderer> renderer = ResourcesManager::getResource<QuadRenderer>("main_renderer");
   std::weak_ptr<Camera> camera = ResourcesManager::getResource<Camera>("main_camera");
-  std::weak_ptr<Font> font = ResourcesManager::getResource<Font>("dogica");
   std::weak_ptr<Font> font_8 = ResourcesManager::getResource<Font>("dogica_8");
 
-  float startX = font.lock().get()->maxHeight() + 15.0f;
-  float yPos = startX;
-  glm::vec2 size = font_8.lock().get()->getTextSize("COMMAND ");
+  float startY = _scoreBackground.transform.size().y + _padding;
+  float yPos = startY;
+  glm::vec2 commandTextSize = font_8.lock().get()->getTextSize("COMMAND ");
+  commandTextSize.x += _padding;
+
+  glm::vec2 spacebarTextSize = font_8.lock().get()->getTextSize("Spacebar");
+
+  float totalHeight = 0.0f;
 
   Text(Text::CreateInfo{
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(0.0f, yPos),
+    .position = glm::vec2(_padding, yPos + _padding),
     .value = "Hotkeys:",
     .color = Color(255),
     .layer = 5
   }).instantiate();
 
-  yPos += size.y + 5.0f;
+  yPos += commandTextSize.y + _padding * 2;
+  totalHeight += commandTextSize.y + _padding * 2;
 
   Text(Text::CreateInfo{
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(0.0f, yPos),
+    .position = glm::vec2(_padding, yPos),
     .value = "COMMAND",
     .color = Color(255),
     .layer = 5
@@ -208,19 +213,20 @@ void UI::fixedText()
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(size.x, yPos),
+    .position = glm::vec2(commandTextSize.x, yPos),
     .value = "KEY",
     .color = Color(255),
     .layer = 5
   }).instantiate();
 
-  yPos += size.y + 1.0f;
+  yPos += commandTextSize.y + 1.0f;
+  totalHeight += commandTextSize.y + 1.0f;
 
   Text(Text::CreateInfo{
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(0.0f, yPos),
+    .position = glm::vec2(_padding, yPos),
     .value = "Flap",
     .color = Color(255),
     .layer = 5
@@ -230,19 +236,20 @@ void UI::fixedText()
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(size.x, yPos),
+    .position = glm::vec2(commandTextSize.x, yPos),
     .value = "Spacebar",
     .color = Color(255),
     .layer = 5
   }).instantiate();
 
-  yPos += size.y + 1.0f;
+  yPos += commandTextSize.y + 1.0f;
+  totalHeight += commandTextSize.y + 1.0f;
 
   Text(Text::CreateInfo{
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(0.0f, yPos),
+    .position = glm::vec2(_padding, yPos),
     .value = "Reset",
     .color = Color(255),
     .layer = 5
@@ -252,19 +259,20 @@ void UI::fixedText()
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(size.x, yPos),
+    .position = glm::vec2(commandTextSize.x, yPos),
     .value = "F1",
     .color = Color(255),
     .layer = 5
   }).instantiate();
 
-  yPos += size.y + 1.0f;
+  yPos += commandTextSize.y + 1.0f;
+  totalHeight += commandTextSize.y + 1.0f;
 
   Text(Text::CreateInfo{
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(0.0f, yPos),
+    .position = glm::vec2(_padding, yPos),
     .value = "Debug",
     .color = Color(255),
     .layer = 5
@@ -274,19 +282,20 @@ void UI::fixedText()
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(size.x, yPos),
+    .position = glm::vec2(commandTextSize.x, yPos),
     .value = "F8",
     .color = Color(255),
     .layer = 5
   }).instantiate();
 
-  yPos += size.y + 1.0f;
+  yPos += commandTextSize.y + 1.0f;
+  totalHeight += commandTextSize.y + 1.0f;
 
   Text(Text::CreateInfo{
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(0.0f, yPos),
+    .position = glm::vec2(_padding, yPos),
     .value = "Pause",
     .color = Color(255),
     .layer = 5
@@ -296,10 +305,27 @@ void UI::fixedText()
     .font = font_8,
     .camera = camera,
     .renderer = renderer,
-    .position = glm::vec2(size.x, yPos),
+    .position = glm::vec2(commandTextSize.x, yPos),
     .value = "ESC",
     .color = Color(255),
     .layer = 5
   }).instantiate();
-  // Fixed Text
+
+  totalHeight += commandTextSize.y;
+
+  Sprite(Sprite::CreateInfo{
+    .frame = {
+      .color = Color(0, 0, 0, 150)
+    },
+    .transform = {
+      .position = glm::vec2(0.0f, startY),
+      .size = glm::vec2(
+        commandTextSize.x + spacebarTextSize.x + _padding * 2,
+        totalHeight + _padding
+      ),
+      .layer = 4
+    },
+    .renderer = renderer,
+    .camera = camera,
+  }).instantiate();
 }
